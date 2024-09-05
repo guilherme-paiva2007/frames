@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Frames - Início</title>
+        <script src="./js/prototypes.js"></script>
+        <script src="./js/script.js"></script>
+        <script src="./js/config.js"></script>
+        <script src="./js/load.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <style>
+            #bankTransactionsDisplay li {
+                width: 40%;
+    display: grid;
+    grid-template-columns: 6fr 4fr 2fr 3fr;
+    padding: 4px;
+}
+    .inputTransaction {
+        background-color: rgba(9, 255, 0, 0.514);
+    }
+    .outputTransaction {
+        background-color: rgba(255, 0, 0, 0.514);
+    }
+        </style>
+    </head>
+    <body>
+        <p>Texto</p>
+        <input type="text" placeholder="Input">
+        <button>Botão</button>
+        <button type="reset">Botão</button>
+        <button type="button">Botão</button>
+        <input type="date" name="" id="">
+        <input type="datetime-local" onchange="console.log(new Date(this.value))">
+        <p>Total: <span id="bankTotalValueDisplay"></span></p>
+        <p>Entradas: <span id="bankInputsValueDisplay"></span></p>
+        <p>Saídas: <span id="bankOutputsValueDisplay"></span></p>
+        <ul id="bankTransactionsDisplay"></ul>
+    </body>
+</html>

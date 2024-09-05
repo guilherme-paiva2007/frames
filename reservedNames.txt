@@ -1,0 +1,23 @@
+----PROTOTYPE
+
+----SCRIPT
+storage
+theme
+search
+interest
+bank
+    ul#bankTransactionsDisplay
+    #bankTotalValueDisplay
+    #bankInputsValueDisplay
+    #bankOutputsValueDisplay
+    .transactionName
+    .transactionValue
+    .transactionDate
+    .transactionDirection
+    .inputTransaction
+    .outputTransaction
+
+patternElement, patternList:
+    .ignoreWrite
+
+----CONFIG
