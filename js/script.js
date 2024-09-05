@@ -260,10 +260,8 @@ search.objectPropertyInArray = function searchObjectPropertyInObjectArray(array,
     let propertyIndex = -1;
 
     array.forEach((object, index) => {
-        console.log('Objeto:', object)
         Object.keys(object).forEach(key => {
             if (propertyIndex !== -1) return;
-            console.log('\tChave:', key, `(${key == propertyName})`, 'Valor:', object[key], `(${object[key] == propertyValue})`)
             if (object[key] == propertyValue && key == propertyName) return propertyIndex = index;
         })
     })
@@ -284,8 +282,6 @@ const interest = {} // Juro = Interest
 
 // Adicionar função de load() para carregar salvos em session e local (Procura primeiro em session, se não achar, pula para local).
 // Adicionar salvamento automatico da lista de transações em session e opção externa (função) de salvar no local.
-// Adicionar função para remover transação (utilizando search de objeto em array) e adicionar verificação ao inserir novas transações para impedir nomes iguais (pois eles que serão buscados ao tentar remover uma transação)
-// Adicionar span de botões (por enquanto somente remover) junto do display das transações
 
 bank.transactionList = [];
 
@@ -337,7 +333,7 @@ bank.update = function bankUpdate() {
                     directionClass = "outputTransaction"
                     break;
             }
-            finalText += `<li class="${directionClass}"> <span class="transactionName">${transaction.name}</span> <span class="transactionValue">${transaction.originalValue}</span> <span class="transactionDirection">${transaction.direction.replace('in', 'Entrada').replace('out', 'Saída')}</span> <span class="transactionDate">${transaction.date}</span> </li>`
+            finalText += `<li class="${directionClass}"> <span class="transactionName">${transaction.name}</span> <span class="transactionValue">${transaction.originalValue}</span> <span class="transactionDirection">${transaction.direction.replace('in', 'Entrada').replace('out', 'Saída')}</span> <span class="transactionDate">${transaction.date}</span> <button class="transactionButton" onclick="bank.remove('${transaction.id}')">Remover</button></li>`
         })
         transactions.write(finalText)
     }
@@ -356,24 +352,32 @@ bank.newTransaction = function bankNewTransaction(name, value, date, direction) 
     if (value < 0) value = Math.abs(value);
     if (direction == "out") value = value * -1;
 
+    let actDate = new Date();
+
+    let id = `${actDate.getFullYear()}${(actDate.getMonth() + 1).toString().fillUntil('0', 2, 'before')}${actDate.getDate().toString().fillUntil('0', 2, 'before')}-${actDate.getHours().toString().fillUntil('0', 2, 'before')}${actDate.getMinutes().toString().fillUntil('0', 2, 'before')}${actDate.getSeconds().toString().fillUntil('0', 2, 'before')}${actDate.getMilliseconds().toString().slice(0, 2).fillUntil('0', 2, 'before')}`
+
     date = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 
-    bank.transactionList.push({ name: name, value: value, originalValue: originalValue, date: date, direction: direction });
+    bank.transactionList.push({ name: name, value: value, originalValue: originalValue, date: date, direction: direction, id: id });
     bank.update()
 }
 
-bank.removeTransaction = function bankRemoveTransaction(name) {
-    
+bank.removeTransaction = function bankRemoveTransaction(id) {
+    // Adicionar verificação
+
+    let newList = [];
+    bank.transactionList.forEach(transaction => {
+        if (transaction.id == id) return;
+        newList.push(transaction);
+    })
+
+    bank.transactionList = newList;
+    bank.update();
 }
 
 bank.new = (name, value, date, direction) => { bank.newTransaction(name, value, date, direction) };
-bank.remove = (name) => { bank.removeTransaction(name) };
+bank.remove = (id) => { bank.removeTransaction(id) };
 bank.list = bank.transactionList;
-
-bank.new('Transacao 1', 10, new Date(), 'out')
-bank.new('Segundasdfsdf4', 1230, new Date(), 'in')
-bank.new('Mais uma', 30, new Date(), 'in')
-bank.new('Testeee', 1900, new Date(), 'out')
 
     // Pattern Classes
 
@@ -389,7 +393,7 @@ class patternList {
 class patternElement {
     constructor(target, type, rewriteType = "overwrite", value) {
         this.target = target;
-        this.type = type;
+        this.type = type; // Adicionar query aqui também
         this.value = value;
         this.rewriteType = rewriteType;
         if (!this.rewriteType.isIn(["overwrite", "after", "before"])) this.rewriteType = "overwrite";

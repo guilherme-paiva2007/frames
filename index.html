@@ -13,7 +13,7 @@
             #bankTransactionsDisplay li {
                 width: 40%;
     display: grid;
-    grid-template-columns: 6fr 4fr 2fr 3fr;
+    grid-template-columns: 6fr 4fr 2fr 3fr 1fr;
     padding: 4px;
 }
     .inputTransaction {
@@ -25,13 +25,17 @@
         </style>
     </head>
     <body>
-        <p>Texto</p>
-        <input type="text" placeholder="Input">
-        <button>Botão</button>
-        <button type="reset">Botão</button>
-        <button type="button">Botão</button>
-        <input type="date" name="" id="">
-        <input type="datetime-local" onchange="console.log(new Date(this.value))">
+        <form action="#" id="currencySubmit">
+            <input type="text" name="name" required>
+            <input type="number" name="value" required>
+            <input type="datetime-local" name="date" required>
+            <label for="direction">Direção: </label>
+            <select name="direction" id="direction">
+                <option value="in">Entrada</option>
+                <option value="out">Saída</option>
+            </select>
+            <button type="submit">Enviar</button>
+        </form>
         <p>Total: <span id="bankTotalValueDisplay"></span></p>
         <p>Entradas: <span id="bankInputsValueDisplay"></span></p>
         <p>Saídas: <span id="bankOutputsValueDisplay"></span></p>

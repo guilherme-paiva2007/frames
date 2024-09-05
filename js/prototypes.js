@@ -125,10 +125,13 @@ Number.prototype.isBetween = function isBetween(min, max, includeEquals, complex
  * Preenche um array até que ele esteja completamente cheio e retorna o novo array.
  * @param {any} filler 
  * @param {number} lengthNeeded 
+ * @param {"before"|"after"} pos
  * @returns {array}
  */
-Array.prototype.fillUntil = function fillUntil(filler, lengthNeeded) {
+Array.prototype.fillUntil = function fillUntil(filler, lengthNeeded, pos) {
     if (typeof lengthNeeded !== "number") lengthNeeded = 0;
+    if (typeof pos !== "string") return;
+    if (pos !== "after" && pos !== "before") pos = "after"
 
     let array = [];
     for (let i = 0; i < this.length; i++) {
@@ -137,7 +140,12 @@ Array.prototype.fillUntil = function fillUntil(filler, lengthNeeded) {
     }
 
     while (array.length < lengthNeeded) {
-        array.push(filler)
+        if (pos == "after") {
+            array.push(filler)
+        }
+        if (pos == "before") {
+            array.unshift(filler)
+        }
     }
     return array
 }
@@ -166,4 +174,33 @@ String.prototype.isBetween = function isBetween(min, max = Infinity) { // Atuali
     if (this.length > max) is = false;
 
     return is;
+}
+
+/**
+ * Preenche uma `string` até alcançar o tamanho desejado.
+ * @param {char} filler 
+ * @param {number} lengthNeeded 
+ * @param {"before"|"after"} pos 
+ * @returns 
+ */
+String.prototype.fillUntil = function fillUntil(filler, lengthNeeded, pos = "after") {
+    if (typeof lengthNeeded !== "number") lengthNeeded = 0;
+    if (typeof pos !== "string") return;
+    if (pos !== "after" && pos !== "before") pos = "after"
+    if (filler.length > 1) filler = filler[0];
+
+    let array = this.split('');
+    for (let i = 0; i < this.length; i++) {
+        array[i] = this[i];
+    }
+
+    while (array.length < lengthNeeded) {
+        if (pos == "after") {
+            array.push(filler)
+        }
+        if (pos == "before") {
+            array.unshift(filler)
+        }
+    }
+    return array.join('')
 }
