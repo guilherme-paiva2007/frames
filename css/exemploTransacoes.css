@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Jost", 'Times New Roman', Times, serif;
+    font-weight: 500;
+    font-style: normal;
+    color: white;
+}
+
+body {
+    background-color: var(--blueVar2_darkTheme);
+    width: 100vw;
+}
+
+main {
+    width: 70%;
+    margin: 0 auto;
+    background-color: var(--blueVar2_lightTheme);
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+main > * {
+    margin-bottom: 4px !important;
+}
+
+form {
+    background-color: var(--blackFilter1);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10em;
+    gap: 3em;
+}
+
+form > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+#form-entradaTransacoes-lado1 label {
+    width: 4em;
+    display: inline-block;
+    text-align: end;
+}
+
+#form-entradaTransacoes-lado1 input {
+    width: 12em;
+}
+
+input, button {
+    color: black;
+    padding: 0.2em;
+    background-color: var(--white);
+    border: 0;
+    outline: none;
+    border-radius: 4px;
+}
+
+input:hover:not([type=radio]), button:hover {
+    outline: 2px var(--blueVar2_lightTheme) solid
+}
+
+button {
+    font-weight: 700;
+}
+
+input:focus:not([type=radio]), button:focus {
+    background-color: var(--blueVar1_darkTheme);
+    color: white;
+    outline: 2px var(--blueVar2_lightTheme) solid;
+}
+
+.stylediv-radioInput {
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+    position: relative;
+}
+
+.stylediv-radioInput input[type=radio].styled {
+    position: absolute;
+    appearance: none;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.stylediv-radioInput .newDisplay {
+    position: absolute;
+    pointer-events: none;
+    background-color: var(--white);
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    border: 2px var(--white) solid;
+    box-sizing: border-box;
+}
+
+input[type=radio].styled:checked ~ .newDisplay {
+    background-color: var(--blueVar1_lightTheme);
+}
+
+main > section {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+#section-saidaTransacoes .div-topo {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#section-saidaTransacoes .div-topo div {
+    min-width: 9em;
+    width: fit-content;
+    height: 6em;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#section-saidaTransacoes .div-topo div.red {
+    background-color: var(--redVar1_darkTheme);
+    border: 2px var(--redVar2_darkTheme) solid;
+    box-sizing: border-box;
+}
+
+#section-saidaTransacoes .div-topo div.green {
+    background-color: var(--greenVar1_darkTheme);
+    border: 2px var(--greenVar2_darkTheme) solid;
+    box-sizing: border-box;
+}
+
+#section-saidaTransacoes .div-topo div.blue {
+    background-color: var(--blueVar1_darkTheme);
+    border: 2px var(--blueVar2_darkTheme) solid;
+    box-sizing: border-box;
+}
+
+#section-listaTransacoes {
+    width: 90%;
+    height: auto !important;
+    padding: 8px;
+    box-sizing: border-box;
+    max-width: none;
+    background-color: var(--blackFilter1);
+    height: 2px;
+    --gridPattern: 8fr 5fr 3fr 3fr 1.2fr;
+}
+
+#section-listaTransacoes article {
+    display: grid;
+    grid-template-columns: var(--gridPattern);
+}
+
+.transactionName, .transactionValue {
+    overflow-x: hidden;
+}
+
+ul {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
+li {
+    display: grid;
+    grid-template-columns: var(--gridPattern);
+    background-color: var(--blackFilter2);
+    padding: 2px 4px;
+}
+
+li button {
+    background-color: var(--blackFilter2);
+    box-sizing: border-box;
+    font-weight: 500;
+    color: white;
+    width: fit-content;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+}
+
+li button:hover, li button:focus {
+    background-color: var(--blackFilter1);
+    outline: none;
+}
+
+.inputTransaction {
+    background-color: var(--greenVar1_darkTheme);
+}
+
+.outputTransaction {
+    background-color: var(--redVar1_darkTheme);
+}
+
+.transactionButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transactionButton img {
+    height: 1em;
+    width: 1em;
+    filter: invert(100%);
+}
+
+.dinheiro::before, .transactionValue::before {
+    content: "R$";
+}
+
+
+@media (max-width: 420px) {
+    main {
+        width: 100%;
+    }
+    form {
+        flex-direction: column;
+        height: auto;
+        gap: 0;
+    }
+    #form-entradaTransacoes-lado1, #form-entradaTransacoes-lado2 {
+        margin: 0.3em;
+        gap: 0.5em
+    }
+    main > section {
+        width: 100%;
+    }
+    #section-saidaTransacoes .div-topo {
+        flex-direction: column;
+    }
+    #section-saidaTransacoes .div-topo div {
+        flex-direction: row;
+        height: auto;
+        width: 100%;
+    }
+    #section-listaTransacoes {
+        width: 100%;
+    }
+    #section-listaTransacoes article {
+        display: none;
+    }
+    #section-listaTransacoes li {
+        grid-template-areas: "nome nome nome nome"
+        "valor valor valor data"
+        "direcao x x remover";
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .transactionName {
+        grid-area: nome;
+    }
+    .transactionValue {
+        grid-area: valor;
+    }
+    .transactionDirection {
+        grid-area: direcao;
+    }
+    .transactionDate {
+        grid-area: data;
+    }
+    .transactionButton {
+        grid-area: remover;
+    }
+}

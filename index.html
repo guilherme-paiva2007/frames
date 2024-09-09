@@ -12,22 +12,48 @@
         <style>
             #bankTransactionsDisplay li {
                 width: 40%;
-    display: grid;
-    grid-template-columns: 6fr 4fr 2fr 3fr 1fr;
-    padding: 4px;
-}
-    .inputTransaction {
-        background-color: rgba(9, 255, 0, 0.514);
-    }
-    .outputTransaction {
-        background-color: rgba(255, 0, 0, 0.514);
-    }
+                min-width: 800px;
+                display: grid;
+                grid-template-columns: 6fr 4fr 2fr 3fr 1fr;
+                padding: 4px;
+            }
+            .inputTransaction {
+                background-color: rgba(9, 255, 0, 0.514);
+            }
+            .outputTransaction {
+                background-color: rgba(255, 0, 0, 0.514);
+            }
+            .fullscreenAlert {
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.4);
+                position: fixed;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .fullscreenAlert div {
+                min-width: 400px;
+                min-height: 250px;
+                width: 25%;
+                height: 30%;
+                background-color: white;
+                border-radius: 12px;
+            }
         </style>
     </head>
     <body>
+        <!-- <div class="fullscreenAlert">
+            <div></div>
+        </div> -->
+        <p>
+            <a href="./outraPagina.html">Outra página</a>
+        </p>
         <form action="#" id="currencySubmit">
             <input type="text" name="name" required>
-            <input type="number" name="value" required>
+            <input type="text" name="value" required class="numberInput">
             <input type="datetime-local" name="date" required>
             <label for="direction">Direção: </label>
             <select name="direction" id="direction">
@@ -36,9 +62,20 @@
             </select>
             <button type="submit">Enviar</button>
         </form>
+        <button style="display: block;" onclick="bank.save(true)">Salvar Local</button>
+        <div>
+            <button onclick="bank.clear()">Limpar Armazenamento</button>
+        </div>
         <p>Total: <span id="bankTotalValueDisplay"></span></p>
         <p>Entradas: <span id="bankInputsValueDisplay"></span></p>
         <p>Saídas: <span id="bankOutputsValueDisplay"></span></p>
         <ul id="bankTransactionsDisplay"></ul>
     </body>
+    <script>
+        bank.config({
+            formId: 'currencySubmit',
+            resetInputs: true,
+            automaticDate: true
+        })
+    </script>
 </html>

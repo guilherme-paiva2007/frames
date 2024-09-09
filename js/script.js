@@ -5,7 +5,18 @@ styleC.simple = "color: ";
 styleC.grey = "color: grey";
 styleC.code = "color: gold; text-decoration: underline";
 styleC.type = "color: lightblue; text-decoration: underline";
+styleC.var = "color: mediumpurple; text-decoration: underline";
 styleC.number = "color: springgreen"
+
+const consoleMessages = {}
+
+consoleMessages.storageNewPrefix = {};
+consoleMessages.storageNewPrefix.invalidType = (newPrefix) => { console.log(`%cErro em %cstorage.newPrefix%c:\n\t> %cnewPrefix%c de tipo inválido. Insira o tipo %cstring%c.\n\t> Tipo do valor inserido: %c${typeof newPrefix}%c.`, styleC.simple, styleC.code, styleC.simple, styleC.var, styleC.simple, styleC.type, styleC.simple, styleC.type, styleC.simple); }
+consoleMessages.storageNewPrefix.invalidLength = (newPrefix) => { console.log(`%cErro em %cstorage.newPrefix%c:\n\t> %cnewPrefix%c precisa de um valor de tamanho válido %c(Entre 1 e 30 caracteres)%c.\n\t> Tamanho do valor inserido: %c${newPrefix.length}%c.`, styleC.simple, styleC.code, styleC.simple, styleC.var, styleC.simple, styleC.grey, styleC.simple, styleC.number, styleC.simple); }
+consoleMessages.storageSet = {};
+consoleMessages.storageGet = {};
+consoleMessages.storageRemove = {};
+consoleMessages.storageClear = {};
 
     // Storage Object and Methods
 
@@ -18,9 +29,8 @@ storage.prefix = "aulasweb" + "_"
  * @returns {void}
  */
 storage.newPrefix = function storageSetNewPrefix(newPrefix) {
-    let simple = "color: white"; let code = "color: gold"
-    if (typeof newPrefix !== "string") return console.log(`%cErro com %cstorage.newPrefix%c:\n\t> Novo prefixo de tipo inválido. Insira o tipo %cstring%c.\n\t> Tipo do valor inserido: %c${typeof newPrefix}%c.`, styleC.simple, styleC.code, styleC.simple, styleC.type, styleC.simple, styleC.type, styleC.simple);
-    if (!newPrefix.isBetween(1, 30)) return console.log(`%cErro com %cstorage.newPrefix%c:\n\t> Novo prefixo precisa de um valor de tamanho válido %c(Entre 1 e 30 caracteres)%c.\n\t> Tamanho do valor inserido: %c${newPrefix.length}%c.`, styleC.simple, styleC.code, styleC.simple, styleC.grey, styleC.simple, styleC.number, styleC.simple);
+    if (typeof newPrefix !== "string") return consoleMessages.storageNewPrefix.invalidType(newPrefix);
+    if (!newPrefix.isBetween(1, 30)) return consoleMessages.storageNewPrefix.invalidLength(newPrefix);
 
     storage.prefix = newPrefix + "_";
 }
@@ -216,10 +226,15 @@ inputs.update = function inputUpdate(inputName, requiredValue, selectElement = f
 inputs.applyEmptyPlaceholder = function inputApplyPlaceholder() {
     document.getElementsByTagName('input').forEach(element => {
         if (!element.placeholder == "") return;
-        // if (!element.required) return;
         if (element.classList.contains('ignorePlaceholderWrite')) return;
         element.placeholder = "";
     })
+}
+
+inputs.getDateValue = function inputGetDateValue(date) {
+    let returnValue = `${date.getFullYear()}-${(date.getMonth() + 1).toString().fillUntil('0', 2, 'before')}-${(date.getDate()).toString().fillUntil('0', 2, 'before')}`;
+    returnValue += `T${date.getHours().toString().fillUntil('0', 2, 'before')}:${date.getMinutes().toString().fillUntil('0', 2, 'before')}`;
+    return returnValue;
 }
 
     // Search and Methods
@@ -278,12 +293,107 @@ function navigateTo(destination) {
     // Economic Simulator
 
 const bank = {}
-const interest = {} // Juro = Interest
 
-// Adicionar função de load() para carregar salvos em session e local (Procura primeiro em session, se não achar, pula para local).
-// Adicionar salvamento automatico da lista de transações em session e opção externa (função) de salvar no local.
+// Alguma mecânica de configuração pra salvar no armazenamento se vai abrir o registro local de transações ou não.
 
 bank.transactionList = [];
+bank.loaded = false;
+bank.removeButton = {
+    type: "text",
+    content: "Remover"
+}
+
+bank.transaction = class Transaction {
+    constructor(name, value, date, direction, configs = {existentID: undefined, storage: 'session'}) {
+        this.name = name;
+        this.value = value;
+        this.date = date;
+        this.direction = direction;
+        this.storage = configs.storage;
+
+        let actDate = new Date();
+        let id = `${actDate.getFullYear()}${(actDate.getMonth() + 1).toString().fillUntil('0', 2, 'before')}${actDate.getDate().toString().fillUntil('0', 2, 'before')}-${actDate.getHours().toString().fillUntil('0', 2, 'before')}${actDate.getMinutes().toString().fillUntil('0', 2, 'before')}${actDate.getSeconds().toString().fillUntil('0', 2, 'before')}${actDate.getMilliseconds().toString().slice(0, 2).fillUntil('0', 2, 'before')}`
+        this.id = id;
+
+        if (typeof configs.existentID == "string") this.id = configs.existentID;
+        // Utilizar existentID somente para load
+
+        if (typeof name !== "string" || name == "") this.name = `${actDate.getDate().toString().fillUntil('0', 2, 'before')}-${actDate.getMonth().toString().fillUntil('0', 2, 'before')}-${actDate.getFullYear()}`;
+        if (!name.isBetween(1, 50)) this.name = this.name.slice(0, 50);
+        if (typeof value !== "number") this.value = 1;
+        if (value == 0) this.value = 1;
+        if (date.constructor !== Date) this.date = new Date();
+        if (typeof this.storage !== 'string') this.storage = 'session';
+        if (!this.storage.isIn(['session', 'local'])) this.storage = 'session';
+        if (typeof direction !== "string") this.direction = 'in';
+        if (!this.direction.isIn(['in', 'out'])) this.direction = 'in';
+
+        this.baseValue = Math.abs(this.value);
+
+        if (value < 0) this.value = Math.abs(this.value);
+        if (direction == "out") this.value = this.value * -1;
+
+        this.baseDate = this.date;
+        this.date = `${this.date.getDate()}/${this.date.getMonth() + 1}/${this.date.getFullYear()}`;
+
+        bank.transactionList.push(this)
+        bank.update()
+    }
+    edit(newParams) {
+        let newParamsKeys = Object.keys(newParams);
+
+        if (newParamsKeys.includes('direction')) {
+            newParamsKeys.splice(newParamsKeys.indexOf('direction', 1));
+            newParamsKeys.unshift('direction');
+        }
+
+        newParamsKeys.forEach(key => {
+            if (!key.isIn(this.editableParams)) return
+            let newValue = newParams[key];
+
+            switch (key) {
+                case "name":
+                    if (typeof newValue !== "string" || newValue == "") return console.log('Nome de tipo inválido'); // Adicionar alertas aqui??? (Nesse caso dava pra ir acumulando todos os erros e no final mostrar um alerta com a lista de erros ne) // Provisoriamente por consoles.logs
+                    if (!newValue.isBetween(1, 50)) return console.log('Nome de tamanho inválido');
+                    this[key] = newValue;
+                    break;
+                case "value":
+                    if (typeof newValue !== "number") newValue = 1;
+                    if (newValue == 0) newValue = 1;
+            
+                    this.baseValue = Math.abs(newValue);
+
+                    if (newValue < 0) newValue = Math.abs(newValue);
+                    if (this.direction == "out") newValue = newValue * -1;
+            
+                    this[key] = newValue;
+                    break;
+                case "date":
+                    this[key] = newValue;
+                    break;
+                case "direction":
+                    this[key] = newValue;
+                    break;
+                default:
+                    break;
+            }
+        })
+
+        bank.update();
+    }
+    remove() {
+        let newList = [];
+        bank.transactionList.forEach(transaction => {
+            if (transaction.id == this.id) return;
+            newList.push(transaction);
+        })
+
+        bank.transactionList = newList;
+        bank.update();
+    }
+    params = ['name', 'value', 'date', 'direction', 'id', 'baseValue'];
+    editableParams = ['name', 'value', 'date', 'direction'];
+}
 
 bank.getTotal = function bankGetTotalTransactions() {
     let total = 0
@@ -306,24 +416,33 @@ bank.getTotalOutputs = function bankGetTotalOutputs() {
     let total = 0
     bank.transactionList.forEach(transaction => {
         if (transaction.direction !== "out") return;
-        total += transaction.originalValue;
+        total += transaction.baseValue;
     })
     return total
 }
 
-bank.update = function bankUpdate() {
+bank.update = function bankUpdate(withLocal = false) {
     const transactions = search.element('bankTransactionsDisplay', 'id');
     const total = search.element('bankTotalValueDisplay', 'id');
     const inputValues = search.element('bankInputsValueDisplay', 'id');
     const outputValues = search.element('bankOutputsValueDisplay', 'id');
 
-    if (total !== null) {total.write(bank.getTotal());}
-    if (inputValues !== null) inputValues.write(bank.getTotalInputs());
-    if (outputValues !== null) outputValues.write(bank.getTotalOutputs());
+    if (total !== null) {total.write(bank.getTotal().formatInMoneyBR());}
+    if (inputValues !== null) inputValues.write(bank.getTotalInputs().formatInMoneyBR());
+    if (outputValues !== null) outputValues.write(bank.getTotalOutputs().formatInMoneyBR());
 
     if (transactions !== null) {
-        let finalText = ``;
+        transactions.innerHTML = "";
         bank.transactionList.forEach(transaction => {
+            let newElement = document.createElement('li');
+            let subElements = {
+                name: document.createElement('span'),
+                value: document.createElement('span'),
+                direction: document.createElement('span'),
+                date: document.createElement('span'),
+                removeButton: document.createElement('button')
+            }
+
             let directionClass = ""
             switch (transaction.direction) {
                 case "in":
@@ -333,51 +452,177 @@ bank.update = function bankUpdate() {
                     directionClass = "outputTransaction"
                     break;
             }
-            finalText += `<li class="${directionClass}"> <span class="transactionName">${transaction.name}</span> <span class="transactionValue">${transaction.originalValue}</span> <span class="transactionDirection">${transaction.direction.replace('in', 'Entrada').replace('out', 'Saída')}</span> <span class="transactionDate">${transaction.date}</span> <button class="transactionButton" onclick="bank.remove('${transaction.id}')">Remover</button></li>`
+            newElement.classList.add(directionClass);
+
+            subElements.name.classList.add('transactionName');
+            subElements.name.appendChild(document.createTextNode(`${transaction.name}`));
+
+            subElements.value.classList.add('transactionValue');
+            subElements.value.appendChild(document.createTextNode(`${transaction.baseValue.formatInMoneyBR()}`));
+            
+            subElements.direction.classList.add('transactionDirection');
+            subElements.direction.appendChild(document.createTextNode(`${transaction.direction.replace('in', 'Entrada').replace('out', 'Saída')}`));
+            
+            subElements.date.classList.add('transactionDate');
+            subElements.date.appendChild(document.createTextNode(`${transaction.date}`));
+            
+            subElements.removeButton.classList.add('transactionButton');
+            switch (bank.removeButton.type) {
+                case "img":
+                    let removeButtoImg = document.createElement('img');
+                    removeButtoImg.src = bank.removeButton.content;
+                    subElements.removeButton.append(removeButtoImg);
+                    break;
+                case "text":
+                    subElements.removeButton.appendChild(document.createTextNode(bank.removeButton.content));
+                    break;
+            }
+            subElements.removeButton.addEventListener('click', () => {
+                transaction.remove()
+            })
+
+            Object.values(subElements).forEach(subElement => { newElement.append(subElement) })
+            transactions.appendChild(newElement)
         })
-        transactions.write(finalText)
     }
+
+    bank.save(withLocal);
 }
 
-bank.newTransaction = function bankNewTransaction(name, value, date, direction) {
-    if (typeof name !== "string") return;
-    if (!name.isBetween(1, 50)) return;
-    if (typeof value !== "number") return;
-    if (value == 0) return;
-    if (date.constructor !== Date) return;
-    if (typeof direction !== "string") return;
-    if (!direction.isIn(['in', 'out'])) return;
+bank.save = function bankSave(local = false) {
+    let savingList = [];
+    bank.transactionList.forEach(transaction => {
+        let sendingObject = {
+            name: transaction.name,
+            value: transaction.value,
+            direction: transaction.direction,
+            date: transaction.baseDate,
+            id: transaction.id,
+            storage: transaction.storage
+        };
+        savingList.push(sendingObject);
+    })
 
-    let originalValue = value;
-    if (value < 0) value = Math.abs(value);
-    if (direction == "out") value = value * -1;
+    local ? 
+    storage.set('transactions', JSON.stringify(savingList), 'local') :
+    storage.set('transactions', JSON.stringify(savingList), 'session')
+}
 
-    let actDate = new Date();
+bank.load = function bankLoad() {
+    if (bank.loaded) return;
 
-    let id = `${actDate.getFullYear()}${(actDate.getMonth() + 1).toString().fillUntil('0', 2, 'before')}${actDate.getDate().toString().fillUntil('0', 2, 'before')}-${actDate.getHours().toString().fillUntil('0', 2, 'before')}${actDate.getMinutes().toString().fillUntil('0', 2, 'before')}${actDate.getSeconds().toString().fillUntil('0', 2, 'before')}${actDate.getMilliseconds().toString().slice(0, 2).fillUntil('0', 2, 'before')}`
+    let loadedIDs = [];
 
-    date = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    let localTransactions = JSON.parse(storage.localGet('transactions'));
+    let sessionTransactions = JSON.parse(storage.sessionGet('transactions'));
 
-    bank.transactionList.push({ name: name, value: value, originalValue: originalValue, date: date, direction: direction, id: id });
+    // Pqq ta tendo essa diferença na verificação oshee
+    if (localTransactions) localTransactions.forEach(transaction => {
+        if (transaction.id.isIn(loadedIDs)) return;
+        loadedIDs.push(transaction.id);
+        new bank.transaction(transaction.name, Math.round(parseFloat(transaction.value) * 100) / 100, new Date(transaction.date), transaction.direction, {existentID: transaction.id});
+    });
+    if (typeof sessionTransactions == "object" && sessionTransactions !== null) sessionTransactions.forEach(transaction => {
+        if (transaction.id.isIn(loadedIDs)) return;
+        if (transaction.storage == "local") return;
+        loadedIDs.push(transaction.id);
+        new bank.transaction(transaction.name, Math.round(parseFloat(transaction.value) * 100) / 100, new Date(transaction.date), transaction.direction, {existentID: transaction.id});
+    });
+
+    bank.loaded = true;
+    bank.update();
+}
+
+bank.clearTransactions = function bankClearTransactions() {
+    storage.sessionRemove('transactions');
+    storage.localRemove('transactions');
+    bank.transactionList = [];
     bank.update()
 }
 
-bank.removeTransaction = function bankRemoveTransaction(id) {
-    // Adicionar verificação
+bank.newTransaction = function bankNewTransaction(name, value, date, direction) {
+    new bank.transaction(name, value, date, direction);
+}
 
-    let newList = [];
+bank.removeTransaction = function bankRemoveTransaction(id) {
+    bank.get(id).remove()
+}
+
+bank.editTransaction = function bankEditTransaction(id, newParams) {
+    bank.get(id).edit(newParams)
+}
+
+bank.getTransaction = function bankGetTransaction(id) {
+    let foundTransaction = null;
+    let found = false;
+    
     bank.transactionList.forEach(transaction => {
-        if (transaction.id == id) return;
-        newList.push(transaction);
+        if (found) return;
+        if (transaction.id == id) {
+            foundTransaction = transaction;
+            found = true;
+        }
     })
 
-    bank.transactionList = newList;
-    bank.update();
+    return foundTransaction;
+}
+
+bank.configForm = function bankConfigForm(formId, resetInputs, resetInputsKeepDate = false) {
+    search.element(formId, 'id').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const form = event.target;
+
+        bank.newTransaction(form.name.value, Math.round(parseFloat(form.value.value) * 100) / 100, new Date(form.date.value), form.direction.value);
+        if (resetInputs) {
+            form.name.value = "";
+            form.value.value = "";
+            form.direction.value = "in";
+            if (!resetInputsKeepDate) {
+                form.date.value = inputs.getDateValue(new Date())
+            }
+        }
+    })
+}
+
+/**
+ * Configura o banco.
+ * Implementado no final da página.
+ * @param {{
+ *      formId: string,
+ *      resetInputs?: boolean,
+ *      resetInputsKeepDate?: boolean,
+ *      automaticDate?: boolean,
+ *      removeButton: {
+ *          type: string,
+ *          content: string
+ *      }
+ * }} config
+ */
+bank.config = function bankConfig(config) { // Adicionar opção de alterar nomes de ids e etc.
+    bank.configForm(config.formId, config.resetInputs);
+    if (config.automaticDate) search.element(config.formId, 'id').date.value = inputs.getDateValue(new Date());
+
+    if (config.removeButton && config.removeButton.type.isIn(['text', 'img'])) {
+        bank.removeButton.type = config.removeButton.type
+        bank.removeButton.content = config.removeButton.content
+    }
 }
 
 bank.new = (name, value, date, direction) => { bank.newTransaction(name, value, date, direction) };
 bank.remove = (id) => { bank.removeTransaction(id) };
-bank.list = bank.transactionList;
+bank.edit = (id, newParams) => { bank.editTransaction(id, newParams) }
+bank.get = (id) => bank.getTransaction(id)
+bank.clear = () => { bank.clearTransactions() }
+
+bank.interest = class Interest {
+    constructor(name, capital, type, rate) {
+        this.name = name;
+        this.capital = capital;
+        this.type = type;
+        this.rate = rate;
+        this.amount = 0;
+    }
+}
 
     // Pattern Classes
 

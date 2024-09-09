@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Teste - Transacoes</title>
+        <script src="../js/prototypes.js"></script>
+        <script src="../js/script.js"></script>
+        <script src="../js/config.js"></script>
+        <script src="../js/load.js" defer></script>
+        <link rel="stylesheet" href="../css/themes.css">
+        <link rel="stylesheet" href="../css/exemploTransacoes.css">
+    </head>
+    <body>
+        <main>
+            <form action="#" id="form-entradaTransacoes">
+                <div id="form-entradaTransacoes-lado1">
+                    <div>
+                        <label for="input-transacoes-nome">Nome:</label>
+                        <input type="text" name="name" id="input-transacoes-nome" required>
+                    </div>
+                    <div>
+                        <label for="input-transacoes-valor">Valor:</label>
+                        <input type="text" class="numberInput" name="value" id="input-transacoes-valor" inputmode="numeric" required>
+                    </div>
+                    <div>
+                        <label for="input-transacoes-data">Data:</label>
+                        <input type="datetime-local" name="date" id="input-transacoes-data" required>
+                    </div>
+                </div>
+                <div id="form-entradaTransacoes-lado2">
+                    <div class="divform-radioLabel">
+                        <div>
+                            <div class="stylediv-radioInput">
+                                <input type="radio" class="styled" name="direction" id="input-transacoes-entrada" value="in" checked required>
+                                <div class="newDisplay"></div>
+                            </div>
+                            <label for="input-transacoes-entrada">Entrada</label>
+                        </div>
+                        <div>
+                            <div class="stylediv-radioInput">
+                                <input type="radio" class="styled" name="direction" id="input-transacoes-saida" value="out" required>
+                                <div class="newDisplay"></div>
+                            </div>
+                            <label for="input-transacoes-saida">Saída</label>
+                        </div>
+                    </div>
+                    <button type="submit">Enviar</button>
+                </div>
+            </form>
+            <section id="section-controleTransacoes"></section>
+            <section id="section-saidaTransacoes">
+                <div class="div-topo">
+                    <div class="inline-block blue div-transacoesInfo">
+                        <p>Total</p>
+                        <p><span id="bankTotalValueDisplay" class="dinheiro"></span></p>
+                    </div>
+                    <div class="inline-block green div-transacoesInfo">
+                        <p>Entradas</p>
+                        <p><span id="bankInputsValueDisplay" class="dinheiro"></span></p>
+                    </div>
+                    <div class="inline-block red div-transacoesInfo">
+                        <p>Saídas</p>
+                        <p><span id="bankOutputsValueDisplay" class="dinheiro"></span></p>
+                    </div>
+                </div>
+            </section>
+            <section id="section-listaTransacoes">
+                <article>
+                    <p>Nome</p>
+                    <p>Valor</p>
+                    <p>Direção</p>
+                    <p>Data</p>
+                </article>
+                <ul id="bankTransactionsDisplay"></ul>
+            </section>
+        </main>
+    </body>
+    <script>
+        bank.config({
+            formId: 'form-entradaTransacoes',
+            resetInputs: true,
+            automaticDate: true,
+            removeButton: {
+                type: "img",
+                content: ".././img/cancelButton.svg"
+            }
+        })
+    </script>
+</html>

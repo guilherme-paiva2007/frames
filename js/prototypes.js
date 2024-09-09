@@ -10,6 +10,11 @@ HTMLCollection.prototype.forEach = function HTMLCollectionForEach(callback) { //
     }
 }
 
+/**
+ * Adiciona um eventListener a todos os elementos da coleção.
+ * @param {Event.type} event 
+ * @param {(event: event) => void} method 
+ */
 HTMLCollection.prototype.addEventListener = function HTMLCollectionAddEventListener(event, method) { // Adicionar verificação
     this.forEach(element => {
         element.addEventListener(event, method);
@@ -203,4 +208,23 @@ String.prototype.fillUntil = function fillUntil(filler, lengthNeeded, pos = "aft
         }
     }
     return array.join('')
+}
+
+Number.prototype.formatInMoneyBR = function formatInMoneyBR(beforePlacer = "") {
+    let moneyArray = this.toString().split('.');
+    let integer = moneyArray[0];
+    let decimal = moneyArray[1];
+
+    if (decimal == undefined) decimal = "0";
+    decimal.fillUntil('0', 2);
+
+    let integerChars = integer.split('').reverse();
+    integer = "";
+    for (let i = 0; i < integerChars.length; i++) {
+        integer += integerChars[i];
+        if ((i + 1) % 3 == 0) integer += '.';
+    }
+    integer = integer.split('').reverse().join('');
+
+    return beforePlacer + integer + "," + decimal;
 }

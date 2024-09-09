@@ -22,3 +22,8 @@ patternElement, patternList:
     .ignoreWrite
 
 ----CONFIG
+
+----LOAD
+eventListeners
+    .numberInput
+    .numberInput-noZero
