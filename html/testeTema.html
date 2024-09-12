@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teste - Cores</title>
+        <link rel="stylesheet" href="../css/themes.css">
+        <script src="../js/prototypes.js"></script>
+        <script src="../js/script.js"></script>
+        <script src="../js/config.js"></script>
+        <script src="../js/load.js" defer></script>
+        <style>
+            .linha {
+                display: flex;
+                gap: 1em;
+                flex-wrap: wrap;
+                padding: 1em;
+                margin: 2em 0;
+                position: relative;
+            }
+            .grupo {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .bloco {
+                height: 4em;
+                width: 4em;
+            }
+            .cover {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                transform: translate(-1em, -1em);
+                display: none;
+                opacity: 0.7;
+                filter: brightness(1.3);
+            }
+        </style>
+    </head>
+    <body>
+        <section class="linha" style="background-color: var(--white);">
+            <!-- <div class="cover" style="background-color: var(--whiteFilter1);"></div> -->
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--pink_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--red_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--orange_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--yellow_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--lime_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--green_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--spring_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--cyan_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--blue_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--darkBlue_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--purple_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--magenta_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter3_lightTheme);"></div>
+            </div>
+        </section>
+        <section class="linha" style="background-color: var(--black);">
+            <!-- <div class="cover" style="background-color: var(--blackFilter1);"></div> -->
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--pink_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--red_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--orange_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--yellow_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--lime_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--green_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--spring_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--cyan_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--blue_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--darkBlue_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--purple_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--magenta_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter3_darkTheme);"></div>
+            </div>
+        </section>
+        <section class="linha" style="background-color: var(--beige);">
+            <!-- <div class="cover" style="background-color: var(--beigeFilter1);"></div> -->
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--pink_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--red_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--orange_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--yellow_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--lime_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--green_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--spring_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--cyan_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--blue_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--darkBlue_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--purple_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--magenta_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter3_beigeTheme);"></div>
+            </div>
+        </section>
+        <section class="linha" style="background-color: var(--royal);">
+            <!-- <div class="cover" style="background-color: var(--royalFilter1);"></div> -->
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--pink_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--red_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--redVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--redFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--orange_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--yellow_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--lime_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--green_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--spring_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--springVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--springFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--cyan_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--blue_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--darkBlue_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--purple_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter3_royalTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--magenta_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter3_royalTheme);"></div>
+            </div>
+        </section>
+        <section class="linha" style="background-color: var(--lightC);">
+            <!-- <div class="cover" style="background-color: var(--lightCFilter1);"></div> -->
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--pink);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar1);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar2);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar3);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar4);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter1);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter2);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--red);"></div>
+                <div class="bloco" style="background-color: var(--redVar1);"></div>
+                <div class="bloco" style="background-color: var(--redVar2);"></div>
+                <div class="bloco" style="background-color: var(--redVar3);"></div>
+                <div class="bloco" style="background-color: var(--redVar4);"></div>
+                <div class="bloco" style="background-color: var(--redFilter1);"></div>
+                <div class="bloco" style="background-color: var(--redFilter2);"></div>
+                <div class="bloco" style="background-color: var(--redFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--orange);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar1);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar2);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar3);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar4);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter1);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter2);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--yellow);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar1);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar2);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar3);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar4);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter1);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter2);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--lime);"></div>
+                <div class="bloco" style="background-color: var(--limeVar1);"></div>
+                <div class="bloco" style="background-color: var(--limeVar2);"></div>
+                <div class="bloco" style="background-color: var(--limeVar3);"></div>
+                <div class="bloco" style="background-color: var(--limeVar4);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter1);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter2);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--green);"></div>
+                <div class="bloco" style="background-color: var(--greenVar1);"></div>
+                <div class="bloco" style="background-color: var(--greenVar2);"></div>
+                <div class="bloco" style="background-color: var(--greenVar3);"></div>
+                <div class="bloco" style="background-color: var(--greenVar4);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter1);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter2);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--spring);"></div>
+                <div class="bloco" style="background-color: var(--springVar1);"></div>
+                <div class="bloco" style="background-color: var(--springVar2);"></div>
+                <div class="bloco" style="background-color: var(--springVar3);"></div>
+                <div class="bloco" style="background-color: var(--springVar4);"></div>
+                <div class="bloco" style="background-color: var(--springFilter1);"></div>
+                <div class="bloco" style="background-color: var(--springFilter2);"></div>
+                <div class="bloco" style="background-color: var(--springFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--cyan);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar1);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar2);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar3);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar4);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter1);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter2);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--blue);"></div>
+                <div class="bloco" style="background-color: var(--blueVar1);"></div>
+                <div class="bloco" style="background-color: var(--blueVar2);"></div>
+                <div class="bloco" style="background-color: var(--blueVar3);"></div>
+                <div class="bloco" style="background-color: var(--blueVar4);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter1);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter2);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--darkBlue);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar1);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar2);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar3);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar4);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter1);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter2);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--purple);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar1);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar2);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar3);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar4);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter1);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter2);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--magenta);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar1);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar2);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar3);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar4);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter1);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter2);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter3);"></div>
+            </div>
+        </section>
+        <section class="linha" style="background-color: var(--reverseC);">
+            <!-- <div class="cover" style="background-color: var(--reverseCFilter1);"></div> -->
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--pink_reverse);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--pinkVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--pinkFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--red_reverse);"></div>
+                <div class="bloco" style="background-color: var(--redVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--redVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--redVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--redVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--redFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--redFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--redFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--orange_reverse);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--orangeVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--orangeFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--yellow_reverse);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--yellowVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--yellowFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--lime_reverse);"></div>
+                <div class="bloco" style="background-color: var(--limeVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--limeVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--limeVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--limeVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--limeFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--green_reverse);"></div>
+                <div class="bloco" style="background-color: var(--greenVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--greenVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--greenVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--greenVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--greenFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--spring_reverse);"></div>
+                <div class="bloco" style="background-color: var(--springVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--springVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--springVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--springVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--springFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--springFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--springFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--cyan_reverse);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--cyanVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--cyanFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--blue_reverse);"></div>
+                <div class="bloco" style="background-color: var(--blueVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--blueVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--blueVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--blueVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--blueFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--darkBlue_reverse);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--darkBlueFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--purple_reverse);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--purpleVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--purpleFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--magenta_reverse);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--magentaVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--magentaFilter3_reverse);"></div>
+            </div>
+        </section>
+        <section class="linha" style="background-color: var(--lightC);">
+            <!-- <div class="cover" style="background-color: var(--reverseCFilter1);"></div> -->
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--mainColor);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar1);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar2);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar3);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar4);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter1);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter2);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter3);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--mainColor_reverse);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar3_reverse);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar4_reverse);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter1_reverse);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter2_reverse);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter3_reverse);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--mainColor_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar3_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar4_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter1_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter2_lightTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter3_lightTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--mainColor_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar3_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar4_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter1_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter2_darkTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter3_darkTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--mainColor_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar3_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar4_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter1_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter2_beigeTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter3_beigeTheme);"></div>
+            </div>
+            <div class="grupo">
+                <div class="bloco" style="background-color: var(--mainColor_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar3_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorVar4_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter1_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter2_royalTheme);"></div>
+                <div class="bloco" style="background-color: var(--mainColorFilter3_royalTheme);"></div>
+            </div>
+        </section>
+    </body>
+</html>

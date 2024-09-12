@@ -215,11 +215,6 @@ li button:hover, li button:focus {
     filter: invert(100%);
 }
 
-.dinheiro::before, .transactionValue::before {
-    content: "R$";
-}
-
-
 @media (max-width: 420px) {
     main {
         width: 100%;

@@ -10,9 +10,51 @@ styleC.number = "color: springgreen"
 
 const consoleMessages = {}
 
+consoleMessages.new = function newConsoleMessage(text) {
+    class ConsoleMessage {
+        constructor(text) {
+            this.originalText = text;
+    
+            this.text = "";
+            this.style = [];
+    
+            this.originalText.split('%c').forEach(line => {
+                if (line == "") return;
+                if (!line.startsWith('[')) { this.style.push(this.styles.simple); return this.text += `%c${line.replace('[simple]', '')}` };
+    
+                let lineStyle = line.slice(1, line.indexOf(']'));
+                if (!lineStyle.isIn(Object.keys(this.styles))) { this.style.push(this.styles.simple); return this.text += `%c${line.replace('[simple]', '')}` };
+    
+                this.text += `%c${line.replace(`[${lineStyle}]`, '')}`;
+                this.style.push(this.styles[lineStyle]);
+            })
+        }
+        styles = {
+            simple: "",
+            grey: "color: grey",
+            underline: "text-decoration: underline",
+            code: "color: gold; text-decoration: underline",
+            type: "color: lightblue; text-decoration: underline",
+            var: "color: mediumpurple; text-decoration: underline",
+            number: "color: springgreen"
+        }
+        print() {
+            console.log(this.text, ...this.style);
+        }
+    }
+    return new ConsoleMessage(text);
+}
+
 consoleMessages.storageNewPrefix = {};
-consoleMessages.storageNewPrefix.invalidType = (newPrefix) => { console.log(`%cErro em %cstorage.newPrefix%c:\n\t> %cnewPrefix%c de tipo inválido. Insira o tipo %cstring%c.\n\t> Tipo do valor inserido: %c${typeof newPrefix}%c.`, styleC.simple, styleC.code, styleC.simple, styleC.var, styleC.simple, styleC.type, styleC.simple, styleC.type, styleC.simple); }
-consoleMessages.storageNewPrefix.invalidLength = (newPrefix) => { console.log(`%cErro em %cstorage.newPrefix%c:\n\t> %cnewPrefix%c precisa de um valor de tamanho válido %c(Entre 1 e 30 caracteres)%c.\n\t> Tamanho do valor inserido: %c${newPrefix.length}%c.`, styleC.simple, styleC.code, styleC.simple, styleC.var, styleC.simple, styleC.grey, styleC.simple, styleC.number, styleC.simple); }
+consoleMessages.storageNewPrefix.invalidType = (newPrefix) => {
+    consoleMessages.new(
+        `%cErro em %c[code]storage.newPrefix%c:\n\t> %c[var]newPrefix%c de tipo inválido. Insira o tipo %c[type]string%c.\n\t> Tipo do valor inserido: %c[type]${typeof newPrefix}%c.`
+    ).print()
+}
+consoleMessages.storageNewPrefix.invalidLength = (newPrefix) => {
+    consoleMessages.new(
+        `%cErro em %c[code]storage.newPrefix%c:\n\t> %c[var]newPrefix%c precisa de um valor de tamanho válido %c[grey](Entre 1 e 30 caracteres)%c.\n\t> Tamanho do valor inserido: %c[number]${newPrefix.length}%c.`
+    ).print()}
 consoleMessages.storageSet = {};
 consoleMessages.storageGet = {};
 consoleMessages.storageRemove = {};
@@ -27,6 +69,7 @@ storage.prefix = "aulasweb" + "_"
  * Altera o prefixo das funções de storage.
  * @param {String} newPrefix `String` entre 1 e 30 caracteres.
  * @returns {void}
+ * `CUIDADO!` está função não apaga o que foi armazenado anteriormente no histórico. Utilize-a somente na configuração da página.
  */
 storage.newPrefix = function storageSetNewPrefix(newPrefix) {
     if (typeof newPrefix !== "string") return consoleMessages.storageNewPrefix.invalidType(newPrefix);
@@ -156,10 +199,10 @@ storage.fullClear = () => { storage.clear('both') }
 const theme = {}
 theme.color = {}
 
-theme.list = ['light', 'dark', 'beige']
-theme.default = 'light'
-theme.color.list = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
-theme.color.default = 'blue'
+theme.list = ['light', 'dark', 'beige', 'royal'];
+theme.default = 'light';
+theme.color.list = ['pink', 'red', 'orange', 'yellow', 'lime', 'green', 'spring', 'cyan', 'blue', 'darkBlue', 'purple', 'magenta'];
+theme.color.default = 'blue';
 
 /**
  * Define o tema mostrado no site
@@ -567,19 +610,22 @@ bank.getTransaction = function bankGetTransaction(id) {
     return foundTransaction;
 }
 
-bank.configForm = function bankConfigForm(formId, resetInputs, resetInputsKeepDate = false) {
+bank.configForm = function bankConfigForm(formId, resetInputs, zeroErrorCallback) {
     search.element(formId, 'id').addEventListener('submit', (event) => {
         event.preventDefault();
         const form = event.target;
+        form.value.pattern = "[0-9\.\,]{1,}";
+        form.value.value = form.value.value.replace(',', '.');
+
+        if (typeof zeroErrorCallback !== "function") zeroErrorCallback = () => { console.log("Erro: Tentativa de inserir 0 como valor em uma transação.") }
+        if (form.value.value == "0") return zeroErrorCallback();
 
         bank.newTransaction(form.name.value, Math.round(parseFloat(form.value.value) * 100) / 100, new Date(form.date.value), form.direction.value);
         if (resetInputs) {
             form.name.value = "";
             form.value.value = "";
             form.direction.value = "in";
-            if (!resetInputsKeepDate) {
-                form.date.value = inputs.getDateValue(new Date())
-            }
+            form.date.value = inputs.getDateValue(new Date());
         }
     })
 }
@@ -590,16 +636,16 @@ bank.configForm = function bankConfigForm(formId, resetInputs, resetInputsKeepDa
  * @param {{
  *      formId: string,
  *      resetInputs?: boolean,
- *      resetInputsKeepDate?: boolean,
  *      automaticDate?: boolean,
  *      removeButton: {
  *          type: string,
  *          content: string
- *      }
+ *      },
+ *      zeroErrorCallback: () => void
  * }} config
  */
 bank.config = function bankConfig(config) { // Adicionar opção de alterar nomes de ids e etc.
-    bank.configForm(config.formId, config.resetInputs);
+    bank.configForm(config.formId, config.resetInputs, config.zeroErrorCallback);
     if (config.automaticDate) search.element(config.formId, 'id').date.value = inputs.getDateValue(new Date());
 
     if (config.removeButton && config.removeButton.type.isIn(['text', 'img'])) {
@@ -614,14 +660,231 @@ bank.edit = (id, newParams) => { bank.editTransaction(id, newParams) }
 bank.get = (id) => bank.getTransaction(id)
 bank.clear = () => { bank.clearTransactions() }
 
-bank.interest = class Interest {
-    constructor(name, capital, type, rate) {
-        this.name = name;
-        this.capital = capital;
-        this.type = type;
-        this.rate = rate;
-        this.amount = 0;
+bank.interest = {};
+bank.interest.actInterest = undefined;
+
+bank.interest.new = function bankNewInterest(capital, type, rate, time, timeUnit) {
+    class Interest {
+        /**
+         * @param {number} capital 
+         * @param {"simple"|"compound"} type 
+         * @param {number} rate 
+         * @param {number} time
+         * @param {"day"|"week"|"month"|"bimonthly"|"quarter"|"semester"|"year"} timeUnit
+         */
+        constructor(capital, type, rate, time, timeUnit) {
+            this.capital = capital;
+            this.type = type;
+            this.rate = rate;
+            this.time = time;
+            this.timeUnit = timeUnit;
+    
+            if (typeof this.capital !== "number" || this.capital == 0) this.capital = 1;
+            if (this.capital < 0) this.capital = Math.abs(this.capital);
+            this.capital = Math.round(this.capital * 100) / 100;
+            if (typeof this.type !== "string") this.type = "simple";
+            if (!this.type.isIn(["simple", "compound"])) this.type = "simple";
+            if (typeof this.rate !== "number" || this.rate == 0) this.rate = 0.01;
+            if (this.rate < 0) this.rate = Math.abs(this.rate);
+            this.rate = Math.round(this.rate * 10000) / 10000;
+            if (typeof this.time !== "number" || this.time == 0) this.time = 1;
+            if (this.time < 0) this.time = Math.abs(this.time);
+            if (typeof this.timeUnit !== "string") this.timeUnit = "month";
+            if (!this.timeUnit.isIn(["day", "week", "month", "bimonthly", "quarter", "semester", "year"])) this.timeUnit = "month";
+    
+            this.interest = 0;
+            this.amount = 0;
+            this.history = {
+                interest: [],
+                amount: []
+            };
+
+            switch (this.type) {
+                case "simple":
+                    this.interest = this.capital * this.rate * this.time;
+                    this.amount = this.capital + this.interest;
+                    this.interest = Math.round(this.interest * 100) / 100;
+                    this.amount = Math.round(this.amount * 100) / 100;
+                    for(let t = 0; t <= this.time; t++) {
+                        let timeInterest = this.capital * this.rate * t
+                        let timeAmount = this.capital + timeInterest;
+                        this.history.interest.push(Math.round(timeInterest * 100) / 100);
+                        this.history.amount.push(Math.round(timeAmount * 100) / 100);
+                    }
+                    break;
+                case "compound":
+                    this.amount = this.capital * Math.pow(1 + this.rate, this.time);
+                    this.interest = this.amount - this.capital;
+                    this.interest = Math.round(this.interest * 100) / 100;
+                    this.amount = Math.round(this.amount * 100) / 100;
+                    for (let t = 0; t <= this.time; t++) {
+                        let timeAmount = this.capital * Math.pow(1 + this.rate, t);
+                        let timeInterest = timeAmount - this.capital;
+                        this.history.interest.push(Math.round(timeInterest * 100) / 100);
+                        this.history.amount.push(Math.round(timeAmount * 100) / 100);
+                    }
+                    break;
+            }
+        }
     }
+    return new Interest(capital, type, rate, time, timeUnit);
+}
+
+/**
+ * Configura uma página de simulação de juros.
+ * @param {{
+ *      formId: string,
+ *      outputIds: {
+ *          interest: string,
+ *          amount: string,
+ *          capital: string,
+ *          rate: string,
+ *          time: string,
+ *          type: string,
+ *          timeUnit: string,
+ *          history: string
+ *      },
+ *      zeroErrorCallback: () => void,
+ *      resetInputs: boolean,
+ *      resetTypenUnit: boolean,
+ *      ignoreTimeZero: boolean
+ * }} config 
+ */
+bank.interest.config = function bankConfigInterest(config) {
+    const form = search.element(config.formId, 'id');
+    const outputs = {
+        interest: search.element(config.outputIds.interest, 'id'),
+        amount: search.element(config.outputIds.amount, 'id'),
+        capital: search.element(config.outputIds.capital, 'id'),
+        rate: search.element(config.outputIds.rate, 'id'),
+        time: search.element(config.outputIds.time, 'id'),
+        type: search.element(config.outputIds.type, 'id'),
+        timeUnit: search.element(config.outputIds.timeUnit, 'id'),
+        history: search.element(config.outputIds.history, 'id')
+    };
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        form.capital.pattern = "[0-9\.\,]{1,}";
+        form.rate.pattern = "[0-9\.\,]{1,}";
+        form.time.pattern = "[0-9\.\,]{1,}";
+        form.capital.value = form.capital.value.replace(',', '.');
+        form.rate.value = form.rate.value.replace(',', '.');
+        form.time.value = form.time.value.replace(',', '.');
+
+        if (typeof zeroErrorCallback !== "function") zeroErrorCallback = () => { console.log("Erro: Tentativa de inserir 0 como valor em uma transação.") }
+        if (form.capital.value == "0") return zeroErrorCallback();
+        if (form.rate.value == "0") return zeroErrorCallback();
+        if (form.time.value == "0") return zeroErrorCallback();
+
+        bank.interest.actInterest = bank.interest.new(parseFloat(form.capital.value), form.type.value, parseFloat(form.rate.value), parseInt(form.time.value), form.timeUnit.value);
+        const actInterest = bank.interest.actInterest;
+        
+        if (config.resetInputs) {
+            form.capital.value = "";
+            form.rate.value = "";
+            form.time.value = "";
+            if (config.resetTypenUnit) {
+                form.type.value = "";
+                form.timeUnit.value = "month";
+            }
+        }
+
+        Object.entries(outputs).forEach(output => {
+            let outputName = output[0];
+            let outputElement = output[1];
+
+            if (outputElement == null) return;
+
+            if (outputName.isIn(['capital', 'interest', 'amount'])) outputElement.write(actInterest[outputName].formatInMoneyBR(true));
+            if (outputName == "time") outputElement.write(actInterest.time);
+            if (outputName == "rate") outputElement.write((actInterest.rate * 100) + "%");
+            if (outputName == "type") {
+                if (actInterest.type == "simple") outputElement.write('Simples');
+                if (actInterest.type == "compound") outputElement.write('Composto');
+            }
+            if (outputName == "timeUnit") {
+                let singular = false;
+                if (actInterest.time == 1) singular = true;
+                switch (actInterest.timeUnit) {
+                    case "day":
+                        outputElement.write('Dia')
+                        if (singular) { outputs.time.write(' dia', 'after') } else { outputs.time.write(' dias', 'after') }
+                        break;
+                    case "week":
+                        outputElement.write('Semana')
+                        if (singular) { outputs.time.write(' semana', 'after') } else { outputs.time.write(' semanas', 'after') }
+                        break;
+                    case "month":
+                        outputElement.write('Mês')
+                        if (singular) { outputs.time.write(' mês', 'after') } else { outputs.time.write(' meses', 'after') }
+                        break;
+                    case "bimonthly":
+                        outputElement.write('Bimestre')
+                        if (singular) { outputs.time.write(' bimestre', 'after') } else { outputs.time.write(' bimestres', 'after') }
+                        break;
+                    case "quarter":
+                        outputElement.write('Trimestre')
+                        if (singular) { outputs.time.write(' trimestre', 'after') } else { outputs.time.write(' trimestres', 'after') }
+                        break;
+                    case "semester":
+                        outputElement.write('Semestre')
+                        if (singular) { outputs.time.write(' semestre', 'after') } else { outputs.time.write(' semestres', 'after') }
+                        break;
+                    case "year":
+                        outputElement.write('Ano')
+                        if (singular) { outputs.time.write(' ano', 'after') } else { outputs.time.write(' anos', 'after') }
+                        break;
+                }
+            }
+            if (outputName == "history") {
+                // let timeUnit = "";
+                // switch (actInterest.timeUnit) {
+                //     case "day":
+                //         timeUnit = "Dia";
+                //         break;
+                //     case "week":
+                //         timeUnit = "Semana";
+                //         break;
+                //     case "month":
+                //         timeUnit = "Mês";
+                //         break;
+                //     case "bimonthly":
+                //         timeUnit = "Bimestre";
+                //         break;
+                //     case "quarter":
+                //         timeUnit = "Trimestre";
+                //         break;
+                //     case "semester":
+                //         timeUnit = "Semestre";
+                //         break;
+                //     case "year":
+                //         timeUnit = "Ano";
+                //         break;
+                // }
+
+                outputElement.write("");
+                actInterest.history.interest.forEach((timeInterest, index) => {
+                    let newListElement = document.createElement('li');
+
+                    if (config.ignoreTimeZero && index == 0) return;
+                    let spanTimeIndex = document.createElement('span');
+                    let spanInterest = document.createElement('span');
+                    let spanAmount = document.createElement('span');
+
+                    spanTimeIndex.appendChild(document.createTextNode(index));
+                    spanInterest.appendChild(document.createTextNode(actInterest.history.interest[index]));
+                    spanAmount.appendChild(document.createTextNode(actInterest.history.amount[index]));
+
+                    newListElement.append(spanTimeIndex);
+                    newListElement.append(spanInterest);
+                    newListElement.append(spanAmount);
+
+                    outputElement.append(newListElement);
+                })
+            }
+        })
+    });
 }
 
     // Pattern Classes

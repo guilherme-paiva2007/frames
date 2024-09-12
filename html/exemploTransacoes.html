@@ -8,6 +8,7 @@
         <script src="../js/script.js"></script>
         <script src="../js/config.js"></script>
         <script src="../js/load.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="../css/themes.css">
         <link rel="stylesheet" href="../css/exemploTransacoes.css">
     </head>
@@ -84,7 +85,8 @@
             removeButton: {
                 type: "img",
                 content: ".././img/cancelButton.svg"
-            }
+            },
+            zeroErrorCallback: zeroCallBack
         })
     </script>
 </html>

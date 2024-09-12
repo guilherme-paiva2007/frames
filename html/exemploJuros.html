@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teste - Juros</title>
+        <script src="../js/prototypes.js"></script>
+        <script src="../js/script.js"></script>
+        <script src="../js/config.js"></script>
+        <script src="../js/load.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="../css/themes.css">
+        <link rel="stylesheet" href="../css/exemploTransacoes.css">
+    </head>
+    <body>
+        <form action="#" id="form-juros">
+            <label for="id-capital">Capital</label>
+            <input type="text" name="capital">
+            <label for="id-rate">Taxa</label>
+            <input type="text" name="rate">
+            <label for="id-time">Tempo</label>
+            <input type="text" name="time">
+            <select name="type">
+                <option value="simple">Simples</option>
+                <option value="compound">Composto</option>
+            </select>
+            <select name="timeUnit">
+                <option value="day">Dia</option>
+                <option value="month">Mês</option>
+                <option value="year">Ano</option>
+            </select>
+            <button type="submit">Enviar</button>
+        </form>
+        <div>
+            <p>Juros: <span id="saida-interest"></span></p>
+            <p>Montante: <span id="saida-amount"></span></p>
+            <hr>
+            <p>Capital: <span id="saida-capital"></span></p>
+            <p>Taxa: <span id="saida-rate"></span>/<span id="saida-timeUnit"></span></p>
+            <p>Tempo: <span id="saida-time"></span></p>
+            <p>Tipo: <span id="saida-type"></span></p>
+            <style>
+                li {
+                    width: 200px; display: grid; grid-template-columns: 1fr 1fr 1fr;
+                }
+            </style>
+            <ul id="saida-history"></ul>
+        </div>
+    </body>
+    <script>
+        bank.interest.config({
+            formId: "form-juros",
+            outputIds: {
+                interest: "saida-interest",
+                amount: "saida-amount",
+                capital: "saida-capital",
+                rate: "saida-rate",
+                time: "saida-time",
+                type: "saida-type",
+                timeUnit: "saida-timeUnit",
+                history: "saida-history"
+            },
+            zeroErrorCallback: zeroCallBack,
+            resetInputs: true,
+            resetTypenUnit: false,
+            ignoreTimeZero: false
+        })
+    </script>
+</html>

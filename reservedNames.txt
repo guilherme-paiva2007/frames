@@ -3,6 +3,8 @@
 ----SCRIPT
 storage
 theme
+    local: storagePrefix + "theme"
+    local: storagePrefix + "theme-color"
 search
 interest
 bank
@@ -17,6 +19,8 @@ bank
     .transactionButton
     .inputTransaction
     .outputTransaction
+    session: storagePrefix + "transactions"
+    local: storagePrefix + "transactions"
 
 patternElement, patternList:
     .ignoreWrite

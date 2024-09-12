@@ -210,13 +210,13 @@ String.prototype.fillUntil = function fillUntil(filler, lengthNeeded, pos = "aft
     return array.join('')
 }
 
-Number.prototype.formatInMoneyBR = function formatInMoneyBR(beforePlacer = "") {
+Number.prototype.formatInMoneyBR = function formatInMoneyBR(useBeforePlacer = true) {
     let moneyArray = this.toString().split('.');
     let integer = moneyArray[0];
     let decimal = moneyArray[1];
 
     if (decimal == undefined) decimal = "0";
-    decimal.fillUntil('0', 2);
+    decimal = decimal.fillUntil('0', 2);
 
     let integerChars = integer.split('').reverse();
     integer = "";
@@ -225,6 +225,10 @@ Number.prototype.formatInMoneyBR = function formatInMoneyBR(beforePlacer = "") {
         if ((i + 1) % 3 == 0) integer += '.';
     }
     integer = integer.split('').reverse().join('');
+    if (integer.startsWith(".")) integer = integer.slice(1);
+
+    let beforePlacer = "";
+    if (useBeforePlacer) beforePlacer = "R$";
 
     return beforePlacer + integer + "," + decimal;
 }
