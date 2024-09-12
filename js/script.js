@@ -726,6 +726,30 @@ bank.interest.new = function bankNewInterest(capital, type, rate, time, timeUnit
                     break;
             }
         }
+        /**
+         * Salva o juros ou montante como transação.
+         * @param {string} name 
+         * @param {Date} date 
+         * @param {"in"|"out"} direction 
+         * @param {"interest"|"amount"} result 
+         * @returns {void}
+         */
+        save(name, date, direction, result) {
+            if (typeof name !== "string") return;
+            if (name == "" || !name.isBetween(1, 50)) return;
+            if (date == undefined || date == null) return;
+            if (date.constructor !== Date) return;
+            if (typeof direction !== "string") return;
+            if (!direction.isIn(['in', 'out'])) return;
+            if (typeof result !== "string") return;
+            if (!result.isIn(['interest', 'amount'])) return;
+
+            let returnValue = "";
+            if (result == "amount") returnValue = this.amount;
+            if (result == "interest") returnValue = this.interest;
+
+            new bank.transaction(name, returnValue, date, direction);
+        }
     }
     return new Interest(capital, type, rate, time, timeUnit);
 }
@@ -838,31 +862,6 @@ bank.interest.config = function bankConfigInterest(config) {
                 }
             }
             if (outputName == "history") {
-                // let timeUnit = "";
-                // switch (actInterest.timeUnit) {
-                //     case "day":
-                //         timeUnit = "Dia";
-                //         break;
-                //     case "week":
-                //         timeUnit = "Semana";
-                //         break;
-                //     case "month":
-                //         timeUnit = "Mês";
-                //         break;
-                //     case "bimonthly":
-                //         timeUnit = "Bimestre";
-                //         break;
-                //     case "quarter":
-                //         timeUnit = "Trimestre";
-                //         break;
-                //     case "semester":
-                //         timeUnit = "Semestre";
-                //         break;
-                //     case "year":
-                //         timeUnit = "Ano";
-                //         break;
-                // }
-
                 outputElement.write("");
                 actInterest.history.interest.forEach((timeInterest, index) => {
                     let newListElement = document.createElement('li');
