@@ -1,3 +1,7 @@
+/*
+    Este arquivo depende da coleção de protótipos.
+*/
+
     // Console Style
 
 const styleC = {};
@@ -287,8 +291,8 @@ const search = {};
 /**
  * Procura por um elemento ou vários na página.
  * @param {String} target 
- * @param {"id"|"class"|"tag"|"name"} type 
- * @returns {HTMLElement|HTMLCollection}
+ * @param {"id"|"class"|"tag"|"name"|"query"} type 
+ * @returns {HTMLElement|HTMLCollection|NodeList}
  */
 search.element = function searchElement(target, type) { // ADICIONAR FILTRO, objeto com: ignoreClass: [], ignoreId: [], ignoreName: [], ignoreTag: [], ignoreProperty: { property: value|"all" }; Adicionar tipo de query (queryAll mas se achar somente um elemento, retorna ele)
     if (typeof target !== "string") return
@@ -297,13 +301,15 @@ search.element = function searchElement(target, type) { // ADICIONAR FILTRO, obj
 
     switch (type) {
         case "class":
-            return document.getElementsByClassName(target)
+            return document.getElementsByClassName(target);
         case "id":
-            return document.getElementById(target)
+            return document.getElementById(target);
         case "tag":
-            return document.getElementsByTagName(target)
+            return document.getElementsByTagName(target);
         case "name":
-            return document.getElementsByTagName(target)
+            return document.getElementsByTagName(target);
+        case "query":
+            return document.querySelectorAll(target);
     }
 }
 
@@ -889,54 +895,107 @@ bank.interest.config = function bankConfigInterest(config) {
 
     // Pattern Classes
 
-class patternList {
-    constructor() {}
-    write() {
-        Object.values(this).forEach(pattern => {
-            pattern.write()
-        })
-    }
-}
+const pattern = {};
 
-class patternElement {
-    constructor(target, type, rewriteType = "overwrite", value) {
+pattern.element = class patternElement {
+    /**
+     * 
+     * @param {string} target 
+     * @param {"id"|"class"|"name"|"tag"|"query"} type 
+     * @param {string|HTMLElement[]} content 
+     * @param {"write"|"append"} action 
+     * @param {{
+     *      rewriteType?: "overwrite"|"after"|"before",
+     *      ignoreClasses?: string[]
+     * }} config 
+     * @returns 
+     */
+    constructor(target, type, content, action, config = { rewriteType: "overwrite", ignoreClasses: [] }) {
         this.target = target;
-        this.type = type; // Adicionar query aqui também
-        this.value = value;
-        this.rewriteType = rewriteType;
-        if (!this.rewriteType.isIn(["overwrite", "after", "before"])) this.rewriteType = "overwrite";
+        this.type = type;
+        this.content = content;
+        this.action = action;
+        this.config = config;
+
+        if (typeof target !== "string" || target.length == 0) return;
+        if (typeof target !== "string") return;
+        if (!type.isIn(['id', 'class', 'name', 'tag', 'query'])) return;
+        if (typeof action !== "string") return;
+        if (!action.isIn(['write', 'append'])) return;
+        if (this.config.ignoreClasses == undefined || this.config.ignoreClasses.constructor !== Array) this.config.ignoreClasses = [];
+        if (this.config.rewriteType == undefined || typeof this.config.rewriteType !== "string") this.config.rewriteType = "overwrite";
+        if (!this.config.rewriteType.isIn(['overwrite', 'before', 'after'])) this.config.rewriteType = "overwrite";
     }
-    write() {
-        function posValue(element, value, type) {
-            if (type == "before") return value + element.innerHTML;
-            if (type == "after") return element.innerHTML + value;
-            return value;
+    apply() {
+        let configs = this.config
+        let action = function action(element, content, action) {
+            if (action == "write") {
+                element.write(content, configs.rewriteType);
+            }
+            if (action == "append") {
+                if (content == undefined) return;
+                if (content.constructor !== Array) return;
+                content.forEach(subElement => {
+                    try {
+                        element.append(subElement);
+                    } catch(err) {
+                        element.appendChild(subElement);
+                    }
+                })
+            }
         }
+        let elements = undefined
         switch (this.type) {
+            case "class":
+                elements = document.getElementsByClassName(this.target);
+                elements.forEach(element => {
+                    action(element, this.content, this.action);
+                })
+                break;
             case "id":
                 let element = document.getElementById(this.target);
-                if (!element) return;
-                if (!element.classList) return;
-                this.value = posValue(element, this.value, this.rewriteType);
-                if (element.classList.contains('ignorePatternWrite')) return;
-                element.innerHTML = this.value
+                if (element == null) return;
+                action(element, this.content, this.action);
                 break;
-            case "class":
-                document.getElementsByClassName(this.target).forEach(element => {
-                    this.value = posValue(element, this.value, this.rewriteType);
-                    if (element.classList.contains('ignorePatternWrite')) return;
-                    element.innerHTML = this.value}
-                )
+            case "name":
+                elements = document.getElementsByName(this.target);
+                elements.forEach(element => {
+                    action(element, this.content, this.action);
+                })
+                break;
+            case "query":
+                elements = document.querySelectorAll(this.target);
+                elements.forEach(element => {
+                    action(element, this.content, this.action);
+                })
                 break;
             case "tag":
-                document.getElementsByTagName(this.target).forEach(element => {
-                    this.value = posValue(element, this.value, this.rewriteType);
-                    if (element.classList.contains('ignorePatternWrite')) return;
-                    element.innerHTML = this.value}
-                )
+                elements = document.getElementsByTagName(this.target);
+                elements.forEach(element => {
+                    action(element, this.content, this.action);
+                })
                 break;
             default:
                 break;
         }
+    }
+}
+
+pattern.elementList = class patternElementList {
+    constructor(...patternElements) {
+        this.elements = [];
+        patternElements.forEach(patternElement => {
+            if (patternElement.constructor == pattern.element) this.elements.push(patternElement);
+        })
+    }
+    append(...patternElements) {
+        patternElements.forEach(patternElement => {
+            if (patternElement.constructor == pattern.element) this.elements.push(patternElement);
+        })
+    }
+    apply() {
+        this.elements.forEach(element => {
+            element.apply();
+        })
     }
 }
