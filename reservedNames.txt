@@ -1,4 +1,16 @@
 ----PROTOTYPE
+HTMLCollection.prototype.*
+  * 
+  * 
+  * 
+  * 
+  * 
+  * 
+  * 
+  * 
+  * 
+  * 
+  * 
 
 ----SCRIPT
 storage
@@ -23,11 +35,8 @@ bank
     local: storagePrefix + "transactions"
 
 patternElement, patternList:
-    .ignoreWrite
+    .ignorePatternWrite
 
 ----CONFIG
 
 ----LOAD
-eventListeners
-    .numberInput
-    .numberInput-noZero
